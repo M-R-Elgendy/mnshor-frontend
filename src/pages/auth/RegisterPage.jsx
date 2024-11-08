@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { http } from '../../utils/httpCommon';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -6,7 +7,7 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!name || !email || !password) {
@@ -14,16 +15,23 @@ const RegisterPage = () => {
             return;
         }
 
-        // For demonstration, we'll log the form values to the console
-        console.log('الاسم:', name);
-        console.log('البريد الإلكتروني:', email);
-        console.log('كلمة المرور:', password);
+        const response = await http.post('/auth/register', {
+            name,
+            email,
+            password,
+        });
 
-        // Reset form and error if needed
-        setName('');
-        setEmail('');
-        setPassword('');
-        setError('');
+        if (response.statusCode == 201) {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('userName', JSON.stringify(response.data.user.name));
+            window.location.href = '/';
+
+        } else {
+            const serverResponse = response.response.data;
+            setError(serverResponse.message);
+            setPassword('');
+        }
+
     };
 
     return (
