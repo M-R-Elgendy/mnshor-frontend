@@ -21,6 +21,7 @@ const LoginPage = () => {
 
         if (response.statusCode == 200) {
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('userId', response.data.userId);
             localStorage.setItem('userName', JSON.stringify(response.data.userName));
             window.location.href = '/';
 

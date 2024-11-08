@@ -3,6 +3,8 @@ import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import Home from '../pages/home/Home';
 import NotFoundPage from '../pages/errors/not-found';
+import CreatePost from '../pages/posts/CreatePost';
+import Profile from '../pages/profile/Profile';
 // import RequireAuth from './RequireAuth';
 // import { AuthProvider, useAuth } from 'react-auth-verification-context';
 
@@ -14,6 +16,8 @@ export function Router() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/create-post" element={<CreatePost />} />
+                <Route path="/profile" element={<Profile />} />
 
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

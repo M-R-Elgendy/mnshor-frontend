@@ -1,9 +1,11 @@
 import React from 'react';
-import { useAuth } from "react-auth-verification-context";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
-    let userName = localStorage.getItem('userName').replaceAll('"', '');
+    const location = useLocation();
+    const userName = localStorage.getItem('userName')?.replaceAll('"', '');
+
+    const isActive = (path) => location.pathname === path ? 'text-blue-500' : 'text-gray-600';
 
     return (
         <aside className="w-1/6 bg-white shadow-md">
@@ -21,36 +23,37 @@ const Sidebar = () => {
                 <hr className="my-4" />
 
                 <nav className="space-y-4 mt-4">
-                    {/* <Router> */}
-                    <Link to="/" className="flex items-center text-blue-500 hover:text-blue-500">
+                    <Link to="/" className={`flex items-center ${isActive('/')} hover:text-blue-500`}>
                         <span className="material-icons">home</span>
                         <span className="ml-2">الرئيسية</span>
                     </Link>
 
-                    <Link to="/add-post" className="flex items-center text-gray-600 hover:text-blue-500">
+                    <Link to="/create-post" className={`flex items-center ${isActive('/create-post')} hover:text-blue-500`}>
                         <span className="material-icons">edit</span>
                         <span className="ml-2">اضافة منشور</span>
                     </Link>
 
-                    <Link to="/manage-categories" className="flex items-center text-gray-600 hover:text-blue-500">
+                    <Link to="/manage-categories" className={`flex items-center ${isActive('/manage-categories')} hover:text-blue-500`}>
                         <span className="material-icons">settings</span>
                         <span className="ml-2">إداره التصنيفات</span>
                     </Link>
 
-                    <Link to="/profile" className="flex items-center text-gray-600 hover:text-blue-500">
+                    <Link to="/profile" className={`flex items-center ${isActive('/profile')} hover:text-blue-500`}>
                         <span className="material-icons">person</span>
-                        <span className="ml-2">حسابي</span>
+                        <span className="ml-2">منشوراتي</span>
                     </Link>
 
-                    <button onClick={() => {
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('userName');
-                        window.location.href = '/login';
-                    }} className="flex items-center text-gray-600 hover:text-blue-500">
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('userName');
+                            window.location.href = '/login';
+                        }}
+                        className="flex items-center text-gray-600 hover:text-blue-500"
+                    >
                         <span className="material-icons">logout</span>
                         <span className="ml-2">تسجيل الخروج</span>
                     </button>
-                    {/* </Router> */}
                 </nav>
             </div>
         </aside>

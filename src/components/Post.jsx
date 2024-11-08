@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { http } from '../utils/httpCommon';
 
-const Post = ({ categoryId = 0 }) => {
+const Post = ({ categoryId = 0, userId = 0 }) => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -9,8 +9,12 @@ const Post = ({ categoryId = 0 }) => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const categoryFilter = categoryId < 1 ? '' : `?categoryId=${categoryId}`;
-                const response = await http.get(`/posts${categoryFilter}`);
+
+                let path = '/posts';
+                if (userId > 0) path = `/posts/me`;
+                if (categoryId > 0 && userId == 0) path = `/posts?categoryId=${categoryId}`;
+
+                const response = await http.get(path);
                 setPosts(response.data || []);
             } catch (err) {
                 console.error("Error fetching posts:", err);
@@ -21,7 +25,7 @@ const Post = ({ categoryId = 0 }) => {
         };
 
         fetchPosts();
-    }, [categoryId]); // Fetch new posts whenever categoryId changes
+    }, [categoryId]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -36,14 +40,14 @@ const Post = ({ categoryId = 0 }) => {
                         <p className="text-gray-600 leading-relaxed">
                             {post.description || 'هذا فقرة لمنشور يمكن تغييرة حيث يستطيع الاشخاص السؤال عن شي معين او فكرة معينة...'}
                         </p>
-                        <div className="flex items-center space-x-2 mt-4">
+                        {/* <div className="flex items-center space-x-2 mt-4">
                             <button className="text-green-500">
                                 <span className="material-icons">arrow_upward</span>
                             </button>
                             <button className="text-red-500">
                                 <span className="material-icons">arrow_downward</span>
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                     {post.image && (
                         <div className="w-1/4">
