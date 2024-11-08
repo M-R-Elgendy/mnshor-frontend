@@ -38,7 +38,7 @@ const Post = ({ categoryId = 0, userId = 0 }) => {
                     <div className="w-3/4">
                         <h3 className="text-xl font-semibold mb-2">{post.title || 'عنوان الخدمة محتوى يمكن تغييرة'}</h3>
                         <p className="text-gray-600 leading-relaxed">
-                            {post.description || 'هذا فقرة لمنشور يمكن تغييرة حيث يستطيع الاشخاص السؤال عن شي معين او فكرة معينة...'}
+                            {post.content}
                         </p>
                         {/* <div className="flex items-center space-x-2 mt-4">
                             <button className="text-green-500">
