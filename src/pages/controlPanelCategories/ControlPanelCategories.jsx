@@ -11,6 +11,7 @@ export default function ControlPanelCategories() {
     const [editCategoryValue, setEditCategoryValue] = useState("");
     const [categoryIdToEdit, setCategoryIdToEdit] = useState(null);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
 
     useEffect(() => {
       const fetchCategories = async () => {
@@ -37,6 +38,23 @@ export default function ControlPanelCategories() {
     const handleSubmit = () => {
       setIsModalOpen(false);
       setDeleteModalOpen(false);
+    };
+
+    const handleDelete = async () => {
+      try {
+        await http.delete(`/preferences/${categoryIdToDelete}`);
+
+        const updatedCategories = categories.filter(
+          (category) => category.Category.id !== categoryIdToDelete
+        );
+        setCategories(updatedCategories);
+
+        setDeleteModalOpen(false);
+        setCategoryIdToDelete(null);
+      } catch (err) {
+        console.error("Error deleting category:", err);
+        setError("Failed to delete category.");
+      }
     };
 
     if (loading) return <p>Loading...</p>;
@@ -90,7 +108,10 @@ export default function ControlPanelCategories() {
                 <td className="py-3 px-4 border-b border-gray-200 text-left">
                   <div className="flex items-center justify-end gap-[5px]">
                     <button
-                      onClick={() => setDeleteModalOpen(true)}
+                      onClick={() => {
+                        setCategoryIdToDelete(category.Category.id);
+                        setDeleteModalOpen(true);
+                      }}
                       className="py-1 px-3 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-200"
                     >
                       <span className="text-xl">-</span>
@@ -149,7 +170,7 @@ export default function ControlPanelCategories() {
                   إغلاق
                 </button>
                 <button
-                  onClick={handleSubmit}
+                  onClick={handleDelete}
                   className="bg-red-500 text-white py-2 px-4 rounded"
                 >
                   حذف
