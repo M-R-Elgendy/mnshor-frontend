@@ -13,6 +13,8 @@ export default function ControlPanelCategories() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [newCategory, setNewCategory] = useState("");
 
+
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -29,6 +31,10 @@ export default function ControlPanelCategories() {
 
     fetchCategories();
   }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!categories.length) return <p>لا يوجد تصنيفات</p>;
 
   const handleEditClick = (category) => {
     setEditCategoryValue(category.name);
@@ -81,10 +87,6 @@ export default function ControlPanelCategories() {
       toast.error("فشل في إضافة التصنيف");
     }
   };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!categories.length) return <p>لا يوجد تصنيفات</p>;
 
   return (
     <div dir="rtl" className="flex min-h-screen bg-gray-100">
@@ -214,3 +216,4 @@ export default function ControlPanelCategories() {
     </div>
   );
 }
+
