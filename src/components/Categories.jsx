@@ -10,7 +10,7 @@ const CategoriesSlider = ({ setCategoryId }) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await http.get(`/categories?page=1&limit=5`);
+                const response = await http.get(`/preferences`);
                 setCategories(response.data || []);
             } catch (err) {
                 console.error("Error fetching categories:", err);
@@ -48,13 +48,13 @@ const CategoriesSlider = ({ setCategoryId }) => {
             {categories.map((category, index) => (
                 <button
                     key={index}
-                    onClick={() => handleCategoryClick(category.id)} // Pass category.id on click
-                    className={`py-2 px-4 rounded-full ${selectedCategoryId === category.id
+                    onClick={() => handleCategoryClick(category.Category.id)} // Pass category.id on click
+                    className={`py-2 px-4 rounded-full ${selectedCategoryId === category.Category.id
                         ? 'bg-blue-500 text-white' // Set background color for selected button
                         : 'bg-gray-200 text-gray-600' // Default background color
                         }`}
                 >
-                    {category.name}
+                    {category.Category.name}
                 </button>
             ))}
         </div>
