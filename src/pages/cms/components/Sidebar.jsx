@@ -21,6 +21,16 @@ const Sidebar = () => {
                 <hr className="my-4" />
 
                 <nav className="space-y-4 mt-4">
+
+                    <Link
+                        to="/"
+                        className={`flex items-center ${isActive(["/"])} hover:text-blue-500`}
+                    >
+                        <span className="material-icons">language</span>
+                        <span className="ml-2">تصفح الموقع</span>
+                    </Link>
+
+
                     <Link
                         to="/cms"
                         className={`flex items-center ${isActive(["/"])} hover:text-blue-500`}
