@@ -70,7 +70,6 @@ const CreatePost = () => {
 
         if (image) body['image'] = image;
 
-
         const response = await http.post('/posts', body);
 
         if (response.statusCode === 201) {

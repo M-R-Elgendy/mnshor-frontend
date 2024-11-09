@@ -5,9 +5,7 @@ import Home from '../pages/home/Home';
 import NotFoundPage from '../pages/errors/not-found';
 import CreatePost from '../pages/posts/CreatePost';
 import Profile from '../pages/profile/Profile';
-// import RequireAuth from './RequireAuth';
-// import { AuthProvider, useAuth } from 'react-auth-verification-context';
-
+import Preferences from '../pages/preferences/Preferences';
 
 export function Router() {
     return (
@@ -18,7 +16,7 @@ export function Router() {
                 <Route path="/" element={<Home />} />
                 <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/profile" element={<Profile />} />
-
+                <Route path="/manage-categories" element={<Preferences />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>

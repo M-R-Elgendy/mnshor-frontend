@@ -10,14 +10,6 @@ export const http = axios.create({
         Authorization: `Bearer ${token}`,
     },
 });
-// http.interceptors.request.use((config) => {
-//     // const token = Cookies.get("_auth");
-//     const token = localStorage.getItem("_auth");
-//     if (token) {
-//         config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-// });
 
 http.interceptors.response.use(
     (response) => {
@@ -39,28 +31,7 @@ http.interceptors.response.use(
 function logoutUser() {
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userRole");
     window.location.href = "/login";
-}
-
-export const IsAuthenticated = () => {
-    const { isAuthenticated } = useAuth();
-    useEffect(() => {
-        const bootstrapAsync = async () => {
-            setLoading(true);
-            let userAttributes = null;
-            try {
-                const user = await checkAuth();
-                const { attributes: userAttr } = user;
-                userAttributes = userAttr;
-            } catch (e) {
-                console.log('error', e);
-            }
-            restoreToken(userAttributes);
-            setLoading(false);
-        };
-
-        bootstrapAsync();
-    }, []);
-
-    return isAuthenticated;
 }

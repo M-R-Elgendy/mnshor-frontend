@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { http } from '../../utils/httpCommon';
 
 const LoginPage = () => {
@@ -23,8 +23,8 @@ const LoginPage = () => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userId', response.data.userId);
             localStorage.setItem('userName', JSON.stringify(response.data.userName));
+            localStorage.setItem('userRole', JSON.stringify(response.data.role));
             window.location.href = '/';
-
         } else {
             const serverResponse = response.response.data;
             setError(serverResponse.message);

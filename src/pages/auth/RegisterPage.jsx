@@ -24,8 +24,9 @@ const RegisterPage = () => {
         if (response.statusCode == 201) {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userName', JSON.stringify(response.data.user.name));
+            localStorage.setItem('userId', JSON.stringify(response.data.user.userId));
+            localStorage.setItem('userRole', JSON.stringify(response.data.user.role));
             window.location.href = '/';
-
         } else {
             const serverResponse = response.response.data;
             setError(serverResponse.message);
