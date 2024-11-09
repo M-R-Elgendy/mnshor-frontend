@@ -1,10 +1,11 @@
 import axios from "axios";
-import { AuthProvider, useAuth } from 'react-auth-verification-context';
-import { useEffect } from "react";
 
 const token = localStorage.getItem("token") || '';
+
+const baseURL = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
 export const http = axios.create({
-    baseURL: "http://localhost:3000/api/v1",
+    baseURL: `${baseURL}/api/v1`,
     headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
