@@ -6,7 +6,8 @@ import NotFoundPage from '../pages/errors/not-found';
 import CreatePost from '../pages/posts/CreatePost';
 import Profile from '../pages/profile/Profile';
 import Preferences from '../pages/preferences/Preferences';
-
+import ControlPanelCategories from '../pages/controlPanelCategories/ControlPanelCategories';
+import ControlPanelUsers from '../pages/controlPanelUsers/ControlPanelUsers';
 export function Router() {
     return (
         <BrowserRouter>
@@ -18,6 +19,8 @@ export function Router() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/manage-categories" element={<Preferences />} />
                 <Route path="*" element={<NotFoundPage />} />
+                <Route path="/controlpanelcategories" element={<ControlPanelCategories />} />
+                <Route path="/controlpanelusers" element={<ControlPanelUsers />} />
             </Routes>
         </BrowserRouter>
     );

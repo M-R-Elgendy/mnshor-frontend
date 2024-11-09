@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const token = localStorage.getItem("token") || '';
 export const http = axios.create({
-    baseURL: "http://localhost:3000/api/v1",
+    baseURL: "https://9611-197-62-213-239.ngrok-free.app/api/v1",
     headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
