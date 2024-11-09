@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 const Sidebar = () => {
     const location = useLocation();
     const userName = localStorage.getItem("userName")?.replaceAll('"', "") || "";
-    const userRole = localStorage.getItem("role")?.replaceAll('"', "") || "";
+    const userRole = localStorage.getItem("userRole")?.replaceAll('"', "") || "";
 
     const isActive = (path) =>
         location.pathname === path ? "text-blue-500" : "text-gray-600";
@@ -49,18 +49,6 @@ const Sidebar = () => {
                         <span className="ml-2">إداره التصنيفات</span>
                     </Link>
 
-                    {userRole == "admin" && (
-                        <Link
-                            to="/cms"
-                            className={`flex items-center ${isActive(
-                                "/manage-users"
-                            )} hover:text-blue-500`}
-                        >
-                            <span className="material-icons">supervisor_account</span>
-                            <span className="ml-2">إدارة الموقع</span>
-                        </Link>
-                    )}
-
                     <Link
                         to="/profile"
                         className={`flex items-center ${isActive(
@@ -70,6 +58,22 @@ const Sidebar = () => {
                         <span className="material-icons">person</span>
                         <span className="ml-2">منشوراتي</span>
                     </Link>
+
+                    {userRole == "admin" && (
+                        <>
+                            <hr />
+                            <Link
+                                to="/cms"
+                                className={`flex items-center ${isActive(
+                                    "/manage-users"
+                                )} hover:text-blue-500`}
+                            >
+                                <span className="material-icons">supervisor_account</span>
+                                <span className="ml-2">إدارة الموقع</span>
+                            </Link>
+                            <hr />
+                        </>
+                    )}
 
                     <button
                         onClick={() => {

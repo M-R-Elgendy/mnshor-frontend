@@ -6,8 +6,8 @@ const Sidebar = () => {
     const userName = localStorage.getItem("userName")?.replaceAll('"', "") || "";
     const userRole = localStorage.getItem("role")?.replaceAll('"', "") || "";
 
-    const isActive = (path) =>
-        location.pathname === path ? "text-blue-500" : "text-gray-600";
+    const isActive = (path = []) =>
+        path.includes(location.pathname) ? "text-blue-500" : "text-gray-600";
 
     return (
         <aside className="w-1/6 bg-white shadow-md">
@@ -22,8 +22,8 @@ const Sidebar = () => {
 
                 <nav className="space-y-4 mt-4">
                     <Link
-                        to="/"
-                        className={`flex items-center ${isActive("/")} hover:text-blue-500`}
+                        to="/cms"
+                        className={`flex items-center ${isActive(["/"])} hover:text-blue-500`}
                     >
                         <span className="material-icons">home</span>
                         <span className="ml-2">الرئيسية</span>
@@ -32,7 +32,7 @@ const Sidebar = () => {
                     <Link
                         to="/cms/categories"
                         className={`flex items-center ${isActive(
-                            "/cms/categories"
+                            ["/cms/categories"]
                         )} hover:text-blue-500`}
                     >
                         <span className="material-icons">edit</span>
@@ -42,7 +42,7 @@ const Sidebar = () => {
                     <Link
                         to="/cms/posts"
                         className={`flex items-center ${isActive(
-                            "/cms/posts"
+                            ["/cms/posts"]
                         )} hover:text-blue-500`}
                     >
                         <span className="material-icons">post_add</span>
@@ -53,7 +53,7 @@ const Sidebar = () => {
                     <Link
                         to="/cms/users"
                         className={`flex items-center ${isActive(
-                            "/cms/users"
+                            ["/cms/users"]
                         )} hover:text-blue-500`}
                     >
                         <span className="material-icons">person</span>
@@ -62,12 +62,14 @@ const Sidebar = () => {
 
                     <Link
                         to="/cms/admins"
-                        className={`flex items-center ${isActive(
-                            "/cms/admins"
-                        )} hover:text-blue-500`}
+                        className={
+                            `flex items-center 
+                            ${isActive(["/cms/admins", "/cms/admins/create"])}  
+                            hover:text-blue-500`
+                        }
                     >
                         <span className="material-icons">supervisor_account</span>
-                        <span className="ml-2">مدير الموقع</span>
+                        <span className="ml-2">مديري الموقع</span>
                     </Link>
 
                     <button

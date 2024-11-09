@@ -91,7 +91,13 @@ export default function ControlPanelCategories() {
   return (
     <div dir="rtl" className="flex min-h-screen bg-gray-100">
       <Sidebar />
-      <div className="w-[85%] p-[20px] mt-[40px]">
+      <div className="w-[85%] p-[20px]">
+
+        <h1 className="text-3xl">
+          التصنيفات
+        </h1>
+        <hr className="my-4" />
+
         <div className="mb-4 flex items-center space-x-4">
           <div className="flex-1">
             <label

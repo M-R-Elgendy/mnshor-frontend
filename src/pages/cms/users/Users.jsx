@@ -51,6 +51,13 @@ const CMSusers = () => {
     <div dir="rtl" className="flex min-h-screen bg-gray-100">
       <Sidebar />
       <div className="mr-[20px] mt-[20px] w-[85%]">
+
+        <h1 className="text-3xl">
+          المستخدمين
+        </h1>
+        <hr className="my-4" />
+
+
         {users.map((user, index) => (
           <div
             key={index}

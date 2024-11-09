@@ -52,13 +52,18 @@ const CMSPosts = () => {
     <div dir="rtl" className="flex min-h-screen bg-gray-100">
       <Sidebar />
       <div className="mr-[20px] mt-[20px] w-[85%]">
-        
-      <Link
+        <h1 className="text-3xl">
+          المنشورات
+        </h1>
+        <hr className="my-4" />
+
+        <Link
           to="/create-post"
           className="p-[0.75rem] font-bold m-0 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
         >
-           إضافة منشور +
+          إضافة منشور +
         </Link>
+
         {posts.map((post, index) => (
           <div
             key={index}
