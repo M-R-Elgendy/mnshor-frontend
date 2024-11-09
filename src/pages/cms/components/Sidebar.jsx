@@ -39,6 +39,16 @@ const Sidebar = () => {
                         <span className="ml-2">التصنيفات</span>
                     </Link>
 
+                    <Link
+                        to="/cms/posts"
+                        className={`flex items-center ${isActive(
+                            "/cms/posts"
+                        )} hover:text-blue-500`}
+                    >
+                        <span className="material-icons">post_add</span>
+                        <span className="ml-2">المنشورات</span>
+                    </Link>
+
 
                     <Link
                         to="/cms/users"

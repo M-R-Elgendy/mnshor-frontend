@@ -1,14 +1,16 @@
 import React from 'react';
 import { http } from '../../../utils/httpCommon';
 import Sidebar from "../components/Sidebar";
+import { toast } from "react-toastify";
 
-const CMSHome = () => {
+const CMSPosts = () => {
     return (
         <div dir="rtl" className="flex min-h-screen bg-gray-100">
             <Sidebar />
-            <h1>Home</h1>
+
+            <h1>posts</h1>
         </div>
     )
 }
 
-export default CMSHome;
+export default CMSPosts;

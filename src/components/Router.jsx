@@ -9,6 +9,8 @@ import Preferences from '../pages/preferences/Preferences';
 import ControlPanelCategories from '../pages/cms/categories/Categories';
 import ControlPanelUsers from '../pages/cms/users/Users';
 import CMSHome from '../pages/cms/home/Home';
+import CMSPosts from '../pages/cms/posts/Posts';
+import CMSUsers from '../pages/cms/users/Users';
 
 export function Router() {
     return (
@@ -23,6 +25,7 @@ export function Router() {
 
                 <Route path="/cms" element={<CMSHome />} />
                 <Route path="/cms/categories" element={<ControlPanelCategories />} />
+                <Route path="/cms/posts" element={<CMSPosts />} />
                 <Route path="/cms/users" element={<ControlPanelUsers />} />
                 <Route path="/cms/admins" element={<ControlPanelUsers />} />
 
