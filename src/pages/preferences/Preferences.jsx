@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { http } from '../../utils/httpCommon';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Preferences = () => {
 

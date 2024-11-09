@@ -24,7 +24,12 @@ const LoginPage = () => {
             localStorage.setItem('userId', response.data.userId);
             localStorage.setItem('userName', JSON.stringify(response.data.userName));
             localStorage.setItem('userRole', JSON.stringify(response.data.role));
-            window.location.href = '/';
+
+            if (response.data.role == 'admin') {
+                window.location.href = '/cms';
+            } else {
+                window.location.href = '/';
+            }
         } else {
             const serverResponse = response.response.data;
             setError(serverResponse.message);

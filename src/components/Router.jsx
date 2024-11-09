@@ -6,8 +6,10 @@ import NotFoundPage from '../pages/errors/not-found';
 import CreatePost from '../pages/posts/CreatePost';
 import Profile from '../pages/profile/Profile';
 import Preferences from '../pages/preferences/Preferences';
-import ControlPanelCategories from '../pages/controlPanelCategories/ControlPanelCategories';
-import ControlPanelUsers from '../pages/controlPanelUsers/ControlPanelUsers';
+import ControlPanelCategories from '../pages/cms/categories/Categories';
+import ControlPanelUsers from '../pages/cms/users/Users';
+import CMSHome from '../pages/cms/home/Home';
+
 export function Router() {
     return (
         <BrowserRouter>
@@ -17,10 +19,14 @@ export function Router() {
                 <Route path="/" element={<Home />} />
                 <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/manage-categories" element={<Preferences />} />
+                <Route path="/preferences" element={<Preferences />} />
+
+                <Route path="/cms" element={<CMSHome />} />
+                <Route path="/cms/categories" element={<ControlPanelCategories />} />
+                <Route path="/cms/users" element={<ControlPanelUsers />} />
+                <Route path="/cms/admins" element={<ControlPanelUsers />} />
+
                 <Route path="*" element={<NotFoundPage />} />
-                <Route path="/controlpanelcategories" element={<ControlPanelCategories />} />
-                <Route path="/controlpanelusers" element={<ControlPanelUsers />} />
             </Routes>
         </BrowserRouter>
     );

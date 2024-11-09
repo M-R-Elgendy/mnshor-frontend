@@ -22,7 +22,7 @@ const Sidebar = () => {
 
                 <nav className="space-y-4 mt-4">
                     <Link
-                        to="/"
+                        to="/cms"
                         className={`flex items-center ${isActive("/")} hover:text-blue-500`}
                     >
                         <span className="material-icons">home</span>
@@ -30,45 +30,34 @@ const Sidebar = () => {
                     </Link>
 
                     <Link
-                        to="/create-post"
+                        to="/cms/categories"
                         className={`flex items-center ${isActive(
-                            "/create-post"
+                            "/cms/categories"
                         )} hover:text-blue-500`}
                     >
                         <span className="material-icons">edit</span>
-                        <span className="ml-2">اضافة منشور</span>
+                        <span className="ml-2">التصنيفات</span>
                     </Link>
 
-                    <Link
-                        to="/preferences"
-                        className={`flex items-center ${isActive(
-                            "/preferences"
-                        )} hover:text-blue-500`}
-                    >
-                        <span className="material-icons">settings</span>
-                        <span className="ml-2">إداره التصنيفات</span>
-                    </Link>
-
-                    {userRole == "admin" && (
-                        <Link
-                            to="/cms"
-                            className={`flex items-center ${isActive(
-                                "/manage-users"
-                            )} hover:text-blue-500`}
-                        >
-                            <span className="material-icons">supervisor_account</span>
-                            <span className="ml-2">إدارة الموقع</span>
-                        </Link>
-                    )}
 
                     <Link
-                        to="/profile"
+                        to="/cms/users"
                         className={`flex items-center ${isActive(
-                            "/profile"
+                            "/cms/users"
                         )} hover:text-blue-500`}
                     >
                         <span className="material-icons">person</span>
-                        <span className="ml-2">منشوراتي</span>
+                        <span className="ml-2">ألمستخدمين</span>
+                    </Link>
+
+                    <Link
+                        to="/cms/admins"
+                        className={`flex items-center ${isActive(
+                            "/cms/admins"
+                        )} hover:text-blue-500`}
+                    >
+                        <span className="material-icons">supervisor_account</span>
+                        <span className="ml-2">مدير الموقع</span>
                     </Link>
 
                     <button

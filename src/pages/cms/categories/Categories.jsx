@@ -1,67 +1,94 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/Sidebar";
-import { http } from "../../utils/httpCommon";
+import { http } from "../../../utils/httpCommon";
+import Sidebar from "../components/Sidebar";
+import { toast } from "react-toastify";
 
 export default function ControlPanelCategories() {
-  const AllCategories = () => {
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editCategoryValue, setEditCategoryValue] = useState("");
-    const [categoryIdToEdit, setCategoryIdToEdit] = useState(null);
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editCategoryValue, setEditCategoryValue] = useState("");
+  const [categoryIdToEdit, setCategoryIdToEdit] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [newCategory, setNewCategory] = useState("");
 
-    useEffect(() => {
-      const fetchCategories = async () => {
-        try {
-          const response = await http.get(`/preferences`);
-          setCategories(response.data || []);
-        } catch (err) {
-          console.error("Error fetching categories:", err);
-          setError("Failed to load categories.");
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchCategories();
-    }, []);
-
-    const handleEditClick = (category) => {
-      setEditCategoryValue(category.Category.name);
-      setCategoryIdToEdit(category.Category.id);
-      setIsModalOpen(true);
-    };
-
-    const handleSubmit = () => {
-      setIsModalOpen(false);
-      setDeleteModalOpen(false);
-    };
-
-    const handleDelete = async () => {
+  useEffect(() => {
+    const fetchCategories = async () => {
       try {
-        await http.delete(`/preferences/${categoryIdToDelete}`);
-
-        const updatedCategories = categories.filter(
-          (category) => category.Category.id !== categoryIdToDelete
-        );
-        setCategories(updatedCategories);
-
-        setDeleteModalOpen(false);
-        setCategoryIdToDelete(null);
+        const response = await http.get(`/categories`);
+        setCategories(response.data || []);
       } catch (err) {
-        console.error("Error deleting category:", err);
-        setError("Failed to delete category.");
+        console.error("Error fetching categories:", err);
+        setError("Failed to load categories.");
+        toast.error("فشل في تحميل التصنيفات");
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-    if (!categories.length) return <p>لا يوجد تصنيفات</p>;
+    fetchCategories();
+  }, []);
 
-    return (
+  const handleEditClick = (category) => {
+    setEditCategoryValue(category.name);
+    setCategoryIdToEdit(category.id);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = (categoryId) => {
+    setCategoryIdToEdit(categoryId);
+    setDeleteModalOpen(true);
+  };
+
+  const handleSubmitEdit = async () => {
+    try {
+      await http.patch(`/categories/${categoryIdToEdit}`, {
+        name: editCategoryValue,
+      });
+      setIsModalOpen(false);
+      setCategories(categories.map(category =>
+        category.id === categoryIdToEdit ? { ...category, name: editCategoryValue } : category
+      ));
+      toast.success("تم تحديث التصنيف بنجاح!");
+    } catch (error) {
+      console.error("Error updating category", error);
+      toast.error("فشل في تحديث التصنيف");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await http.delete(`/categories/${categoryIdToEdit}`);
+      setDeleteModalOpen(false);
+      setCategories(categories.filter(category => category.id !== categoryIdToEdit));
+      toast.success("تم حذف التصنيف بنجاح!");
+    } catch (error) {
+      console.error("Error deleting category", error);
+      toast.error("فشل في حذف التصنيف");
+    }
+  };
+
+  const handleCreateCategory = async () => {
+    if (!newCategory) return;
+    try {
+      const response = await http.post(`/categories`, { name: newCategory });
+      setCategories([...categories, response.data]);
+      setNewCategory("");
+      toast.success("تم إضافة التصنيف بنجاح!");
+    } catch (error) {
+      console.error("Error creating category", error);
+      toast.error("فشل في إضافة التصنيف");
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!categories.length) return <p>لا يوجد تصنيفات</p>;
+
+  return (
+    <div dir="rtl" className="flex min-h-screen bg-gray-100">
+      <Sidebar />
       <div className="w-[85%] p-[20px] mt-[40px]">
         <div className="mb-4 flex items-center space-x-4">
           <div className="flex-1">
@@ -76,9 +103,14 @@ export default function ControlPanelCategories() {
                 id="newCategory"
                 type="text"
                 placeholder="أدخل اسم التصنيف"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <button className="p-[0.75rem] m-0 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200">
+              <button
+                onClick={handleCreateCategory}
+                className="p-[0.75rem] m-0 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+              >
                 إضافة
               </button>
             </div>
@@ -103,24 +135,21 @@ export default function ControlPanelCategories() {
                 <td
                   className={`py-3 px-4 border-b border-gray-200 cursor-pointer`}
                 >
-                  {category.Category.name}
+                  {category.name}
                 </td>
                 <td className="py-3 px-4 border-b border-gray-200 text-left">
                   <div className="flex items-center justify-end gap-[5px]">
-                    <button
-                      onClick={() => {
-                        setCategoryIdToDelete(category.Category.id);
-                        setDeleteModalOpen(true);
-                      }}
-                      className="py-1 px-3 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-200"
-                    >
-                      <span className="text-xl">-</span>
-                    </button>
                     <button
                       onClick={() => handleEditClick(category)}
                       className="py-1 px-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
                     >
                       تعديل
+                    </button>
+                    <button
+                      onClick={() => handleDeleteClick(category.id)}
+                      className="py-1 px-3 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-200"
+                    >
+                      حذف
                     </button>
                   </div>
                 </td>
@@ -147,7 +176,7 @@ export default function ControlPanelCategories() {
                   إغلاق
                 </button>
                 <button
-                  onClick={handleSubmit}
+                  onClick={handleSubmitEdit}
                   className="bg-blue-500 text-white py-2 px-4 rounded"
                 >
                   حفظ التعديلات
@@ -156,6 +185,7 @@ export default function ControlPanelCategories() {
             </div>
           </div>
         )}
+
         {deleteModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-[400px]">
@@ -180,13 +210,7 @@ export default function ControlPanelCategories() {
           </div>
         )}
       </div>
-    );
-  };
 
-  return (
-    <div dir="rtl" className="flex min-h-screen bg-gray-100">
-      <Sidebar />
-      <AllCategories className="w-4/6" />
     </div>
   );
 }
