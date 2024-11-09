@@ -7,19 +7,19 @@ const CMSPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [postIdToEdit, setPostIdToEdit] = useState(null);
+  const [postIdToDelete, setPostIdToDelete] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleDeleteClick = (postId) => {
-    setPostIdToEdit(postId);
+    setPostIdToDelete(postId);
     setDeleteModalOpen(true);
   };
 
   const handleDelete = async () => {
     try {
-      await http.delete(`/posts/${postIdToEdit}`);
+      await http.delete(`/posts/${postIdToDelete}`);
       setDeleteModalOpen(false);
-      setPosts(posts.filter(post => post.id !== postIdToEdit));
+      setPosts(posts.filter(post => post.id !== postIdToDelete));
       toast.success("تم حذف المنشور بنجاح!");
     } catch (error) {
       console.error("Error deleting post", error);

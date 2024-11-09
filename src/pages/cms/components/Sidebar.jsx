@@ -22,7 +22,7 @@ const Sidebar = () => {
 
                 <nav className="space-y-4 mt-4">
                     <Link
-                        to="/cms"
+                        to="/"
                         className={`flex items-center ${isActive("/")} hover:text-blue-500`}
                     >
                         <span className="material-icons">home</span>
