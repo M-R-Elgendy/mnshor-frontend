@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { http } from "../../../utils/httpCommon";
 import Sidebar from "../components/Sidebar";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const CMSPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -19,7 +20,7 @@ const CMSPosts = () => {
     try {
       await http.delete(`/posts/${postIdToDelete}`);
       setDeleteModalOpen(false);
-      setPosts(posts.filter(post => post.id !== postIdToDelete));
+      setPosts(posts.filter((post) => post.id !== postIdToDelete));
       toast.success("تم حذف المنشور بنجاح!");
     } catch (error) {
       console.error("Error deleting post", error);
@@ -51,10 +52,17 @@ const CMSPosts = () => {
     <div dir="rtl" className="flex min-h-screen bg-gray-100">
       <Sidebar />
       <div className="mr-[20px] mt-[20px] w-[85%]">
+        
+      <Link
+          to="/create-post"
+          className="p-[0.75rem] font-bold m-0 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+        >
+           إضافة منشور +
+        </Link>
         {posts.map((post, index) => (
           <div
             key={index}
-            className="flex min-h-[150px] items-start relative bg-white shadow-md rounded-lg p-4 mb-4"
+            className="flex min-h-[150px] items-start relative bg-white shadow-md rounded-lg p-4 mb-4 mt-5"
           >
             <button
               onClick={() => handleDeleteClick(post.id)}
