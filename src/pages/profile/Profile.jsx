@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Post from '../../components/Post';
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 
 const Profile = () => {
 
     let userName = localStorage.getItem('userName');
     if (!userName) {
-        window.location.href = '/login'
+        navigate('/login')
     } else {
         userName = userName.replaceAll('"', '')
     }

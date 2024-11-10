@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { http } from '../../utils/httpCommon';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 
 const Preferences = () => {
 
     let userName = localStorage.getItem('userName');
     if (!userName) {
-        window.location.href = '/login'
+        navigate('/login')
     } else {
         userName = userName.replaceAll('"', '')
     }

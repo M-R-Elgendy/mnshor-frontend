@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { http } from '../../../utils/httpCommon';
 import Sidebar from "../components/Sidebar";
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 
 const NewAdmin = () => {
     const [name, setName] = useState('');
@@ -27,7 +29,8 @@ const NewAdmin = () => {
             localStorage.setItem('userName', JSON.stringify(response.data.user.name));
             localStorage.setItem('userId', JSON.stringify(response.data.user.userId));
             localStorage.setItem('userRole', JSON.stringify(response.data.user.role));
-            window.location.href = '/';
+            navigate('/')
+
         } else {
             const serverResponse = response.response.data;
             setError(serverResponse.message);

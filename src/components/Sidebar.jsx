@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 
 const Sidebar = () => {
     const location = useLocation();
@@ -81,7 +83,7 @@ const Sidebar = () => {
                             localStorage.removeItem("userName");
                             localStorage.removeItem("userId");
                             localStorage.removeItem("userRole");
-                            window.location.href = "/login";
+                            navigate('/login')
                         }}
                         className="flex items-center text-gray-600 hover:text-blue-500"
                     >

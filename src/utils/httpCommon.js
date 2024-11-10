@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 
 const token = localStorage.getItem("token") || '';
 
@@ -34,5 +36,5 @@ function logoutUser() {
     localStorage.removeItem("userName");
     localStorage.removeItem("userId");
     localStorage.removeItem("userRole");
-    window.location.href = "/login";
+    navigate('/login')
 }
