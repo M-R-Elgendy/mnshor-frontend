@@ -15,10 +15,12 @@ const Home = () => {
 
     return (
         <>
-            <div dir='rtl' className="flex min-h-screen bg-gray-100">
-                <Sidebar />
-                <CategoryPostContainer />
-            </div>
+            {userName && (
+                <div dir='rtl' className="flex min-h-screen bg-gray-100">
+                    <Sidebar />
+                    <CategoryPostContainer />
+                </div>
+            )}
         </>
     );
 };
