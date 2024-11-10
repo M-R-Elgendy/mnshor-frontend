@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { http } from '../../utils/httpCommon';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isUserAdmin, setIsUserAdmin] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,11 +27,11 @@ const LoginPage = () => {
             localStorage.setItem('userId', response.data.userId);
             localStorage.setItem('userName', JSON.stringify(response.data.userName));
             localStorage.setItem('userRole', JSON.stringify(response.data.role));
-
+            setIsUserAdmin(response.data.role == 'admin')
             if (response.data.role == 'admin') {
-                window.location.href = '/cms';
+                navigate('/cms')
             } else {
-                window.location.href = '/';
+                navigate('/')
             }
         } else {
             const serverResponse = response.response.data;
