@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { http } from '../../../utils/httpCommon';
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 
 const NewAdmin = () => {
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

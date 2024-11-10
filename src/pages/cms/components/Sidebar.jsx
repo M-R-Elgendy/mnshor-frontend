@@ -2,9 +2,9 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
-const navigate = useNavigate();
 
 const Sidebar = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const userName = localStorage.getItem("userName")?.replaceAll('"', "") || "";
     const userRole = localStorage.getItem("role")?.replaceAll('"', "") || "";

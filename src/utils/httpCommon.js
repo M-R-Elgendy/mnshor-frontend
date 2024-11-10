@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
+
 
 const token = localStorage.getItem("token") || '';
 
@@ -32,6 +32,7 @@ http.interceptors.response.use(
 );
 
 function logoutUser() {
+    const navigate = useNavigate();
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
     localStorage.removeItem("userId");

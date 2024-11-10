@@ -3,9 +3,9 @@ import Sidebar from '../../components/Sidebar';
 import { http } from '../../utils/httpCommon';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 
 const Preferences = () => {
+    const navigate = useNavigate();
 
     let userName = localStorage.getItem('userName');
     if (!userName) {

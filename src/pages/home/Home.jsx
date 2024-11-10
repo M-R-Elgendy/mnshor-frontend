@@ -5,11 +5,13 @@ import CategoryPostContainer from '../../components/CategoryPostContainer';
 
 const Home = () => {
 
-    let userName = localStorage.getItem('userName');
+    let userName = localStorage?.getItem('userName');
 
     if (userName) {
         userName = userName.replaceAll('"', '')
     }
+
+
 
 
     return (

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Post from '../../components/Post';
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 
 const Profile = () => {
+    const navigate = useNavigate();
 
     let userName = localStorage.getItem('userName');
     if (!userName) {
