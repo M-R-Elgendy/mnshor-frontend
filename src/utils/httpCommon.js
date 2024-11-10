@@ -5,7 +5,7 @@ const token = localStorage.getItem("token") || '';
 const baseURL = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
 export const http = axios.create({
-    baseURL: `${baseURL}/api/v1`,
+    baseURL: `${baseURL}`,
     headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
