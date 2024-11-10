@@ -7,9 +7,7 @@ const Home = () => {
 
     let userName = localStorage.getItem('userName');
 
-    if (!userName) {
-        window.location.href = '/login'
-    } else {
+    if (userName) {
         userName = userName.replaceAll('"', '')
     }
 
