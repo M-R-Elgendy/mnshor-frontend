@@ -28,11 +28,7 @@ const LoginPage = () => {
             localStorage.setItem('userName', JSON.stringify(response.data.userName));
             localStorage.setItem('userRole', JSON.stringify(response.data.role));
             setIsUserAdmin(response.data.role == 'admin')
-            if (response.data.role == 'admin') {
-                navigate('/cms')
-            } else {
-                navigate('/')
-            }
+            navigate('/')
         } else {
             const serverResponse = response.response.data;
             setError(serverResponse.message);

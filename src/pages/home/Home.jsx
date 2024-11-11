@@ -11,9 +11,6 @@ const Home = () => {
         userName = userName.replaceAll('"', '')
     }
 
-
-
-
     return (
         <>
             {userName ? (

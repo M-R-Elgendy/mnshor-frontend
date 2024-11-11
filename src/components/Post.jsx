@@ -29,7 +29,7 @@ const Post = ({ categoryId = 0, userId = 0 }) => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (!posts.length) return <p>لا يوجد منشورات</p>;
+    if (!posts.length) return <p>كن اول من يضيف منشورا</p>;
 
     return (
         <>
