@@ -28,9 +28,9 @@ const RegisterPage = () => {
 
             if (response.statusCode === 201) {
                 localStorage.setItem('token', response.data.token);
-                localStorage.setItem('userName', JSON.stringify(response.data.user.name));
-                localStorage.setItem('userId', JSON.stringify(response.data.user.userId));
-                localStorage.setItem('userRole', JSON.stringify(response.data.user.role));
+                localStorage.setItem('userName', JSON.stringify(response.data.userName));
+                localStorage.setItem('userId', JSON.stringify(response.data.userId));
+                localStorage.setItem('userRole', JSON.stringify(response.data.role));
                 toast.success('تم انشاء الحساب بنجاح');
                 navigate('/');
             } else {
@@ -40,6 +40,7 @@ const RegisterPage = () => {
             }
         } catch (error) {
             setLoading(false);
+            console.log(error)
             toast.error('حدث خطأ في الاتصال بالخادم');
         }
     };
