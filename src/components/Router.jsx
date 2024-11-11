@@ -12,6 +12,7 @@ import CMSPosts from '../pages/cms/posts/Posts';
 import CMSUsers from '../pages/cms/users/Users';
 import CMSAdmins from '../pages/cms/admins/Admins';
 import NewAdmin from '../pages/cms/admins/NewAdmin';
+import SinglePost from '../pages/posts/SinglePost';
 
 export function Router() {
     return (
@@ -23,6 +24,7 @@ export function Router() {
                 <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/preferences" element={<Preferences />} />
+                <Route path="/post/:postId" element={<SinglePost />} />
 
                 <Route path="/cms" element={<CMSHome />} />
                 <Route path="/cms/categories" element={<ControlPanelCategories />} />

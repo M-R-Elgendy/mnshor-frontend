@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { http } from '../utils/httpCommon';
+import { LoadingSpinner } from './LoadingSpinner';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ categoryId = 0, userId = 0 }) => {
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchPosts = async () => {
+            setLoading(true);
             try {
-
                 let path = '/posts';
                 if (userId > 0) path = `/posts/me`;
                 if (categoryId > 0 && userId == 0) path = `/posts?categoryId=${categoryId}`;
@@ -18,17 +22,16 @@ const Post = ({ categoryId = 0, userId = 0 }) => {
                 setPosts(response.data || []);
             } catch (err) {
                 console.error("Error fetching posts:", err);
-                setError("Failed to load posts.");
+                toast.error("Failed to load posts.");
             } finally {
                 setLoading(false);
             }
+            setLoading(false);
         };
-
         fetchPosts();
     }, [categoryId]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (loading) return <LoadingSpinner />;
     if (!posts.length) return <p>كن اول من يضيف منشورا</p>;
 
     return (
@@ -40,14 +43,14 @@ const Post = ({ categoryId = 0, userId = 0 }) => {
                         <p className="text-gray-600 leading-relaxed">
                             {post.content}
                         </p>
-                        {/* <div className="flex items-center space-x-2 mt-4">
-                            <button className="text-green-500">
-                                <span className="material-icons">arrow_upward</span>
+                        <div>
+                            <button
+                                onClick={() => navigate(`/post/${post.id}`)}
+                                className="mt-2 p-[0.3rem] px-[1rem] m-0 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+                            >
+                                إقرء المزيد
                             </button>
-                            <button className="text-red-500">
-                                <span className="material-icons">arrow_downward</span>
-                            </button>
-                        </div> */}
+                        </div>
                     </div>
                     {post.image && (
                         <div className="w-1/4">

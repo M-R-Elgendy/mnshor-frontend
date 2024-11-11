@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { http } from '../../utils/httpCommon';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -13,28 +16,32 @@ const RegisterPage = () => {
         e.preventDefault();
 
         if (!name || !email || !password) {
-            setError('من فضلك أكمل جميع الحقول');
+            toast.error('من فضلك أدخل البيانات بشكل صحيح');
             return;
         }
 
-        const response = await http.post('/auth/register', {
-            name,
-            email,
-            password,
-        });
+        setLoading(true);
 
-        if (response.statusCode == 201) {
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('userName', JSON.stringify(response.data.user.name));
-            localStorage.setItem('userId', JSON.stringify(response.data.user.userId));
-            localStorage.setItem('userRole', JSON.stringify(response.data.user.role));
-            navigate('/')
-        } else {
-            const serverResponse = response.response.data;
-            setError(serverResponse.message);
-            setPassword('');
+        try {
+            const response = await http.post('/auth/register', { name, email, password });
+            setLoading(false);
+
+            if (response.statusCode === 201) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('userName', JSON.stringify(response.data.user.name));
+                localStorage.setItem('userId', JSON.stringify(response.data.user.userId));
+                localStorage.setItem('userRole', JSON.stringify(response.data.user.role));
+                toast.success('تم انشاء الحساب بنجاح');
+                navigate('/');
+            } else {
+                const serverResponse = response.response.data;
+                toast.error(serverResponse.message);
+                setPassword('');
+            }
+        } catch (error) {
+            setLoading(false);
+            toast.error('حدث خطأ في الاتصال بالخادم');
         }
-
     };
 
     return (
@@ -93,15 +100,25 @@ const RegisterPage = () => {
                     <button
                         type="submit"
                         className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        disabled={loading}
                     >
-                        إنشاء حساب
+                        {loading ? (
+                            <div className="flex items-center justify-center">
+                                <LoadingSpinner />
+                            </div>
+                        ) : (
+                            'إنشاء حساب'
+                        )}
                     </button>
                 </form>
 
                 <div className="text-center mt-4">
                     <p className="text-sm text-gray-600">
                         لديك حساب بالفعل؟{' '}
-                        <a href="/login" className="text-blue-500 hover:text-blue-600">
+                        <a
+                            onClick={() => navigate('/login')}
+                            style={{ cursor: 'pointer' }}
+                            className="text-blue-500 hover:text-blue-600">
                             سجل الدخول
                         </a>
                     </p>

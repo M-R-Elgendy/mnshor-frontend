@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { http } from '../utils/httpCommon';
+import { LoadingSpinner } from "./LoadingSpinner";
 
 const CategoriesSlider = ({ setCategoryId }) => {
     const [categories, setCategories] = useState([]);
@@ -10,7 +11,7 @@ const CategoriesSlider = ({ setCategoryId }) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await http.get(`/preferences`);
+                const response = await http.get(`/categories`);
                 setCategories(response.data || []);
             } catch (err) {
                 console.error("Error fetching categories:", err);
@@ -23,14 +24,14 @@ const CategoriesSlider = ({ setCategoryId }) => {
         fetchCategories();
     }, []);
 
+    if (loading) {
+        return <LoadingSpinner />
+    }
+
     const handleCategoryClick = (categoryId) => {
         setCategoryId(categoryId);
         setSelectedCategoryId(categoryId);
     };
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-    if (!categories.length) return <p>لا يوجد تصنيفات</p>;
 
     return (
         <div className="flex items-center space-x-2 mb-4">
@@ -38,8 +39,8 @@ const CategoriesSlider = ({ setCategoryId }) => {
                 key='0'
                 onClick={() => handleCategoryClick(0)}
                 className={`py-2 px-4 rounded-full ${selectedCategoryId === 0
-                    ? 'bg-blue-500 text-white' // Set background color for selected button
-                    : 'bg-gray-200 text-gray-600' // Default background color
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-600'
                     }`}
             >
                 الكل
@@ -48,13 +49,13 @@ const CategoriesSlider = ({ setCategoryId }) => {
             {categories.map((category, index) => (
                 <button
                     key={index}
-                    onClick={() => handleCategoryClick(category.Category.id)} // Pass category.id on click
-                    className={`py-2 px-4 rounded-full ${selectedCategoryId === category.Category.id
-                        ? 'bg-blue-500 text-white' // Set background color for selected button
-                        : 'bg-gray-200 text-gray-600' // Default background color
+                    onClick={() => handleCategoryClick(category.id)}
+                    className={`py-2 px-4 rounded-full ${selectedCategoryId === category.id
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-gray-600'
                         }`}
                 >
-                    {category.Category.name}
+                    {category.name}
                 </button>
             ))}
         </div>

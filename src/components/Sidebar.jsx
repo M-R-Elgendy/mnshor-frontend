@@ -8,6 +8,10 @@ const Sidebar = () => {
     const userName = localStorage.getItem("userName")?.replaceAll('"', "") || "";
     const userRole = localStorage.getItem("userRole")?.replaceAll('"', "") || "";
 
+    const isUserLoggedIn = () => {
+        return userName != '' ? true : false;
+    };
+
     const isActive = (path) =>
         location.pathname === path ? "text-blue-500" : "text-gray-600";
 
@@ -16,7 +20,11 @@ const Sidebar = () => {
             <div className="p-6">
                 <div className="flex items-center space-x-2 mb-6">
                     <div>
-                        <p className="text-gray-800 text-xl">مرحبا {userName}</p>
+                        {!isUserLoggedIn() ? (
+                            <p className="text-gray-800 text-xl">مرحبا {userName}</p>
+                        ) : (
+                            <p className="text-gray-800 text-xl">مرحبا بك</p>
+                        )}
                     </div>
                 </div>
 
@@ -31,35 +39,41 @@ const Sidebar = () => {
                         <span className="ml-2">الرئيسية</span>
                     </Link>
 
-                    <Link
-                        to="/create-post"
-                        className={`flex items-center ${isActive(
-                            "/create-post"
-                        )} hover:text-blue-500`}
-                    >
-                        <span className="material-icons">edit</span>
-                        <span className="ml-2">اضافة منشور</span>
-                    </Link>
+                    {isUserLoggedIn() && (
+                        <Link
+                            to="/create-post"
+                            className={`flex items-center ${isActive(
+                                "/create-post"
+                            )} hover:text-blue-500`}
+                        >
+                            <span className="material-icons">edit</span>
+                            <span className="ml-2">اضافة منشور</span>
+                        </Link>
+                    )}
 
-                    <Link
-                        to="/preferences"
-                        className={`flex items-center ${isActive(
-                            "/preferences"
-                        )} hover:text-blue-500`}
-                    >
-                        <span className="material-icons">settings</span>
-                        <span className="ml-2">إداره التصنيفات</span>
-                    </Link>
+                    {isUserLoggedIn() && (
+                        <Link
+                            to="/preferences"
+                            className={`flex items-center ${isActive(
+                                "/preferences"
+                            )} hover:text-blue-500`}
+                        >
+                            <span className="material-icons">settings</span>
+                            <span className="ml-2">إداره التصنيفات</span>
+                        </Link>
+                    )}
 
-                    <Link
-                        to="/profile"
-                        className={`flex items-center ${isActive(
-                            "/profile"
-                        )} hover:text-blue-500`}
-                    >
-                        <span className="material-icons">person</span>
-                        <span className="ml-2">منشوراتي</span>
-                    </Link>
+                    {isUserLoggedIn() && (
+                        <Link
+                            to="/profile"
+                            className={`flex items-center ${isActive(
+                                "/profile"
+                            )} hover:text-blue-500`}
+                        >
+                            <span className="material-icons">person</span>
+                            <span className="ml-2">منشوراتي</span>
+                        </Link>
+                    )}
 
                     {userRole == "admin" && (
                         <>
@@ -77,19 +91,31 @@ const Sidebar = () => {
                         </>
                     )}
 
-                    <button
-                        onClick={() => {
-                            localStorage.removeItem("token");
-                            localStorage.removeItem("userName");
-                            localStorage.removeItem("userId");
-                            localStorage.removeItem("userRole");
-                            navigate('/login');
-                        }}
-                        className="flex items-center text-gray-600 hover:text-blue-500"
-                    >
-                        <span className="material-icons">logout</span>
-                        <span className="ml-2">تسجيل الخروج</span>
-                    </button>
+                    {isUserLoggedIn() ? (
+
+                        <button
+                            onClick={() => {
+                                localStorage.removeItem("token");
+                                localStorage.removeItem("userName");
+                                localStorage.removeItem("userId");
+                                localStorage.removeItem("userRole");
+                                navigate('/login');
+                            }}
+                            className="flex items-center text-gray-600 hover:text-blue-500"
+                        >
+                            <span className="material-icons">logout</span>
+                            <span className="ml-2">تسجيل الخروج</span>
+                        </button>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className={`flex items-center ${isActive("/login")} hover:text-blue-500`}
+                        >
+                            <span className="material-icons">login</span>
+                            <span className="ml-2">تسجيل الدخول</span>
+                        </Link>
+                    )}
+
                 </nav>
             </div>
         </aside>
