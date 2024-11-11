@@ -32,9 +32,9 @@ export default function ControlPanelCategories() {
     fetchCategories();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!categories.length) return <p>لا يوجد تصنيفات</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
+  // if (!categories.length) return <p>لا يوجد تصنيفات</p>;
 
   const handleEditClick = (category) => {
     setEditCategoryValue(category.name);

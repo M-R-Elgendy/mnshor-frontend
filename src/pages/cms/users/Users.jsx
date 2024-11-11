@@ -44,8 +44,8 @@ const CMSusers = () => {
   }, []);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!users.length) return <p>لا يوجد منشورات</p>;
+  // if (error) return <p>Error: {error}</p>;
+  // if (!users.length) return <p>لا يوجد منشورات</p>;
 
   return (
     <div dir="rtl" className="flex min-h-screen bg-gray-100">
